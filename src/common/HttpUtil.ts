@@ -15,7 +15,7 @@ export class HttpUtil{
                         throw result.statusText;
                     else if(_.isNil(r.message))
                         throw r;
-                    throw r.message;
+                    throw `${r.status} ${r.message}`;
                 })
         })
     }

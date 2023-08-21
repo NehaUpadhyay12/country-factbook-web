@@ -29,7 +29,7 @@ body {
   display: flex;
   flex-wrap: inherit;
   justify-content: space-between;
-  margin-left: 45px;
+  margin-left: 20px;
 }
 
 .title-name {
@@ -73,8 +73,7 @@ body {
 .page-banner {
   color: black;
   background-color: #f3f3f3;
-  ;
-  padding: 25px 45px;
+  padding: 25px 25px;
 }
 
 .page-banner span {
@@ -247,4 +246,9 @@ img.detail-icon {
   width: 3%;
   height: auto;
   padding: 300px;
+}
+
+.error-panel{
+  color: red;
+  font-size: 20px;
 }

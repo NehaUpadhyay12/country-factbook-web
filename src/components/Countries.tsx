@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useCountryService } from "../services/CountryService"
 import { Country } from "../model/Country";
 import _ from "lodash";
 import { CountryDetails } from "./CountryDetails";
 import { Loader } from "../common/Loader";
+import { ErrorPanel } from "../common/ErrorPanel";
+import { getEuropeanCountries } from "../services/CountryService";
 
 export const Countries = () => {
-    const countryService = useCountryService();
     const [countries, setCountries] = useState<Country[]>([]);
     const [selectedCountry, setSelectedCountry] = useState<Country>({
         name: { common: '', official: '' }, subregion: '', area: 0, capital: [], flags: { png: '', svg: '' },
@@ -14,28 +14,44 @@ export const Countries = () => {
     });
     const [showCountryDetail, setShowCountryDetail] = useState<boolean>(false);
     const [showLoader, setShowLoader] = useState<boolean>(true);
+    const [error, setError] = useState<string>('');
+    const [showError, setShowError] = useState<boolean>(false);
 
     useEffect(() => {
-        //setTimeout added to showcase loader
-        setTimeout(() => {
-            countryService.getEuropeanCountries()
+        const getCountries = () => {
+            setShowError(false);
+            setShowLoader(true);
+            getEuropeanCountries()
                 .then(result => {
                     setCountries(result);
+                })
+                .catch(error => {
+                    setShowError(true);
+                    setError(`An error ocurred while getting countries. ${error}`);
+                })
+                .finally(() => {
                     setShowLoader(false);
-                });
-        }, 2000)
-
+                }
+                );
+        }
+        getCountries();
     }, []);
+
+
 
     const showDetails = (country: Country) => {
         setSelectedCountry(country);
         setShowCountryDetail(true);
     }
 
+    const calculateNumberOfCountries = () => {
+        return countries.length;
+    }
+
     return (
         <div className="main">
-            {!showLoader && <table className="styled-table">
-                <caption>{countries.length} countries</caption>
+            {!showLoader && !showError && <table className="styled-table">
+                <caption>{calculateNumberOfCountries()} countries</caption>
                 <thead>
                     <tr>
                         <th>Country</th>
@@ -63,6 +79,7 @@ export const Countries = () => {
                 </tbody>
             </table>}
             {showLoader && <Loader />}
+            {showError && <ErrorPanel message={error} />}
             {showCountryDetail && <CountryDetails country={selectedCountry} handlePopupClose={() => setShowCountryDetail(false)} />}
         </div>
     )

@@ -62,7 +62,7 @@ export const CountryDetails = (props: CountryDetailsProps) => {
                             </tr>
                         </tbody>
                     </table>
-                    <button className='close-button' onClick={props.handlePopupClose}>close</button>
+                    <button className='close-button' onClick={props.handlePopupClose}>Close</button>
                 </div>
 
             </section>

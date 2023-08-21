@@ -8,7 +8,7 @@ React based application showing key details of various countries of European Reg
 
 ## Running the application
 
-1. Download source code from https://github.com/NehaUpadhyay12/country-factbook-web
+1. Download/Clone source code from https://github.com/NehaUpadhyay12/country-factbook-web
 2. Open command prompt and navigate to country-factbook-web folder.
 3. Run npm install
 4. Run npm start
